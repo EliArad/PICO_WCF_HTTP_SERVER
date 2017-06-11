@@ -27,6 +27,13 @@ namespace PicoConnector
  
         public PicoTS08()
         {
+            _Open();      
+        }
+        static Object m_lock = new Object();
+
+        void _Open()
+        {
+
             try
             {
                 m_tc.Open();
@@ -37,9 +44,8 @@ namespace PicoConnector
             catch (Exception err)
             {
                 WriteLog(err.Message);
-            }             
+            }       
         }
-        static Object m_lock = new Object();
 
         void WriteLog(string msg)
         {
@@ -120,6 +126,15 @@ namespace PicoConnector
                 m_tc.Dispose();
                 return PrepareResponseOk();
             }
-        }          
+        }
+
+        public Stream Open()
+        {
+            lock (m_lock)
+            {
+                _Open();
+                return PrepareResponseOk();
+            }
+        }     
     }
 }

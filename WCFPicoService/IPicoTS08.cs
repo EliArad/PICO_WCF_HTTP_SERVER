@@ -20,5 +20,10 @@ namespace PicoConnector
         [OperationContract]
         [WebGet(), CorsEnabled]
         Stream Close();
+
+
+        [OperationContract]
+        [WebGet(), CorsEnabled]
+        Stream Open();
     }      
 }
